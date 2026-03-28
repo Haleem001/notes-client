@@ -297,13 +297,10 @@ input, textarea, button, select {
 }
 
 .note-card-actions {
-  opacity: 0;
-  transition: opacity 0.15s;
   display: flex;
   align-items: center;
   gap: 2px;
 }
-.note-card:hover .note-card-actions { opacity: 1; }
 
 /* ─────────────────────────────────────────────
    MISC — PAGE CONTAINER, ERROR BANNER

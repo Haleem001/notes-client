@@ -49,25 +49,60 @@ function NoteCard({
   return (
     <article
       className="note-card"
-      style={{ opacity: isDeleting ? 0.45 : 1, pointerEvents: isDeleting ? "none" : undefined }}
+      style={{
+        opacity: isDeleting ? 0.45 : 1,
+        pointerEvents: isDeleting ? "none" : undefined,
+        padding: 0,
+        overflow: "hidden",
+      }}
     >
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
+      {/* Clickable body → note view */}
+      <Link
+        href={`/notes/${note._id}`}
+        style={{ display: "block", padding: "18px 18px 0", textDecoration: "none" }}
+      >
         <h2
           style={{
             fontSize: "0.9375rem",
             fontWeight: 600,
             color: "var(--color-text)",
             lineHeight: 1.4,
-            flex: 1,
             overflow: "hidden",
             display: "-webkit-box",
             WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
+            marginBottom: note.content ? 8 : 0,
           }}
         >
           {note.title}
         </h2>
-        <div className="note-card-actions">
+        {note.content && (
+          <p
+            style={{
+              fontSize: "0.85rem",
+              color: "var(--color-text-muted)",
+              lineHeight: 1.6,
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {note.content}
+          </p>
+        )}
+      </Link>
+
+      {/* Footer: date + action buttons */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px 12px 18px" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+          {date}
+        </p>
+        {/* Stop propagation so clicks don't navigate */}
+        <div
+          className="note-card-actions"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Link
             href={`/notes/${note._id}/edit`}
             aria-label={`Edit "${note.title}"`}
@@ -92,26 +127,6 @@ function NoteCard({
           </button>
         </div>
       </div>
-
-      {note.content && (
-        <p
-          style={{
-            fontSize: "0.85rem",
-            color: "var(--color-text-muted)",
-            lineHeight: 1.6,
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-          }}
-        >
-          {note.content}
-        </p>
-      )}
-
-      <p style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "auto" }}>
-        {date}
-      </p>
     </article>
   );
 }
